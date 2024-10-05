@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+
             background: url('https://wallpapercave.com/wp/wp5424185.jpg') no-repeat center center fixed;
             background-size: cover; /* Membuat background sesuai layar */
         }
@@ -96,21 +97,16 @@
 
 <body>
     <div class="profile-container">
-        <!-- Gambar Profil Lebih Besar -->
         <img src="https://static-00.iconduck.com/assets.00/laravel-icon-1990x2048-xawylrh0.png" alt="Foto Profil">
-
         <div class="info">
             <strong>Nama:</strong> <?= $nama ?>
         </div>
         <div class="info">
-            <strong>Kelas:</strong> <?= $kelas ?>
-        </div>
-        <div class="info">
             <strong>NPM:</strong> <?= $npm ?>
         </div>
-
-      
+        <div class="info">
+            <p><strong>Kelas:</strong> <?= $nama_kelas ?? 'Kelas tidak ditemukan' ?></p>
+        </div>
     </div>
 </body>
-
 </html>
