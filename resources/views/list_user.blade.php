@@ -1,85 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
-
 <style>
+    /* Mengatur font dan latar belakang agar konsisten */
     body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; /* Ubah dari center ke flex-start agar tombol dan tabel berada di bawah */
-        min-height: 100vh; /* Ubah height ke min-height agar halaman bisa menyesuaikan panjang konten */
+        font-family: 'Poppins', sans-serif;
+        background-color: #cfe2f3; /* Warna background lebih lembut */
         margin: 0;
-        background-color: #a2d5f2;
+        padding: 20px;
     }
 
-    .container {
-        margin-top: 50px; /* Menambahkan jarak antara container dengan bagian atas halaman */
-        width: 80%; /* Mengatur lebar container agar tidak terlalu lebar */
-        background-color: #fff; /* Memberikan background putih pada container */
-        padding: 20px; /* Memberikan sedikit padding pada container */
-        border-radius: 10px; /* Membuat sudut container menjadi rounded */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan untuk efek lebih elegan */
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #fff5db; /* Warna background lembut */
+        transition: transform 0.2s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow lebih halus */
     }
 
-    .table-responsive {
-        margin-top: 20px; /* Memberikan jarak antara tombol "Tambah User" dan tabel */
+    .table:hover {
+        transform: scale(1.02); /* Efek zoom-in saat hover */
     }
 
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-        border-color: #1e7e34;
+    .table thead {
+        background-color: #ff69b4; /* Warna pink cerah untuk header */
+        color: #fff;
+        font-size: 1.2rem;
     }
 
     .table-hover tbody tr:hover {
-        background-color: #f1f1f1;
+        background-color: #f9f9f9; /* Warna lembut saat di-hover */
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
     }
 
-    .table th, .table td {
-        vertical-align: middle; /* Agar konten dalam tabel terlihat rata */
+    .table td, .table th {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 1.1rem;
+        padding: 10px;
+        color: #333; /* Warna teks lebih gelap agar kontras */
+        background-color: #fff; /* Warna background putih untuk seluruh kolom */
+    }
+
+    /* Responsif untuk tampilan mobile */
+    @media (max-width: 768px) {
+        .table {
+            font-size: 0.9rem;
+        }
     }
 </style>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-end mb-3">
-        <a href="{{ route('user.create') }}" class="btn btn-success">Tambah User</a>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered text-center">
-            <thead class="table-secondary">
-                <tr>
-                    <th scope="col"><b>ID</b></th>
-                    <th scope="col"><b>Nama</b></th>
-                    <th scope="col"><b>NPM</b></th>
-                    <th scope="col"><b>Kelas</b></th>
-                    <th scope="col"><b>Aksi</b></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                <tr>
-                    <td>{{ $user['id'] }}</td>
-                    <td>{{ $user['nama'] }}</td>
-                    <td>{{ $user['npm'] }}</td>
-                    <td>{{ $user['nama_kelas'] }}</td>
-                    <td>
-                        <!-- Add action buttons if needed -->
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+<div class="mb-3 mt-2 m-3">
+    <a href="{{ route('user.create') }}" class="btn btn-success"><i class="fas fa-plus"></i>Tambah User</a>
 </div>
 
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nama</th>
+            <th scope="col">NPM</th>
+            <th scope="col">Kelas</th>
+            <th scope="col">aksi</th>
+            <!-- Menghapus kolom aksi -->
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    @foreach($users as $user)
+    <tr>
+        <td>{{ $user->id }}</td>
+        <td>{{ $user->nama }}</td>
+        <td>{{ $user->npm }}</td>
+        <td>{{ $user->nama_kelas }}</td>
+        <td>
+            <a href="{{ route('user.show', $user->id) }}" class="btn btn-primary">Detail</a>
+        </td>
+    </tr>
+@endforeach
+
+    </tbody>
+</table>
 @endsection
