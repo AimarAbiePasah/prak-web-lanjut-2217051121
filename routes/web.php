@@ -15,24 +15,29 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/profile/{nama}/{kelas}/{npm}', [ProfileController::class, 'profile']);
-
-Route::get('/user/profile', [UserController::class,'profile']);
-
-Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-
-Route::post('/user/store', [UserController::class,'store'])->name('user.store');
-
+// Halaman utama (List User)
 Route::get('/', [UserController::class, 'index'])->name('user.list');
 
-Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+// Menampilkan profil berdasarkan nama, kelas, npm (route dinamis)
+Route::get('/profile/{nama}/{kelas}/{npm}', [ProfileController::class, 'profile']);
 
+// Halaman profil user (umum, tanpa parameter)
+Route::get('/user/profile', [UserController::class,'profile'])->name('user.profile');
+
+// Form untuk membuat user
+Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+
+// Menyimpan data user (proses form)
+Route::post('/user/store', [UserController::class,'store'])->name('user.store');
+
+// Edit user (halaman form untuk edit user)
 Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
 
+// Update data user (submit data update user)
+Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+
+// Hapus user
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-Route::get('/show{id}',[UserController::class,'show'])->name('user.show');
+// Menampilkan detail user berdasarkan ID
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');

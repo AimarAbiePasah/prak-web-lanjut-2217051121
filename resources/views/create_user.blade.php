@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .btn-list-user {
-        margin-inline: 107px; /* Custom margin inline for button placement */
+        margin-inline: 107px;
         background-color: #28a745;
         color: white;
         border: none;
@@ -20,35 +20,35 @@
 
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #f0f4f8; /* Warna background lebih netral */
+        background-color: #f0f4f8;
         margin: 0;
-        padding: 20px; /* Menambah padding untuk menjaga tampilan */
+        padding: 20px;
     }
 
     .form-container {
-        background-color: #ffffff; /* Warna putih untuk kontras yang lebih baik */
+        background-color: #ffffff;
         padding: 40px;
         border-radius: 15px;
-        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1); /* Bayangan lebih halus */
-        max-width: 400px; /* Lebar form yang lebih lebar */
-        margin: 20px auto; /* Memusatkan form */
+        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 20px auto;
         transition: all 0.3s ease-in-out;
     }
 
     .form-container:hover {
-        transform: translateY(-5px); /* Efek hover */
+        transform: translateY(-5px);
         box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.15);
     }
 
     h2 {
-        color: #3b3f5c; /* Warna heading yang lebih gelap */
+        color: #3b3f5c;
         margin-bottom: 30px;
         font-size: 24px;
-        text-align: center; /* Memusatkan teks */
+        text-align: center;
     }
 
     .form-group {
-        margin-bottom: 20px; /* Menambah jarak antar elemen form */
+        margin-bottom: 20px;
     }
 
     label {
@@ -59,7 +59,7 @@
         color: #333;
     }
 
-    input[type="text"], select, input[type="file"] {
+    input[type="text"], select, input[type="file"], input[type="number"] {
         width: 100%;
         padding: 12px;
         border-radius: 8px;
@@ -69,14 +69,14 @@
         transition: all 0.3s ease;
     }
 
-    input[type="text"]:focus, select:focus, input[type="file"]:focus {
+    input[type="text"]:focus, select:focus, input[type="file"]:focus, input[type="number"]:focus {
         outline: none;
         border-color: #ff69b4;
         box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
     }
 
     input[type="submit"], button {
-        background-color: #28a745; /* Menggunakan warna tombol yang sama */
+        background-color: #28a745;
         color: white;
         border: none;
         padding: 12px 20px;
@@ -88,54 +88,68 @@
     }
 
     input[type="submit"]:hover, button:hover {
-        background-color: #218838; /* Warna yang lebih cerah saat hover */
+        background-color: #218838;
     }
 
     @media (max-width: 500px) {
         .form-container {
-            width: 90%; /* Responsif untuk perangkat kecil */
+            width: 90%;
             padding: 30px;
         }
     }
 </style>
 
 <div class="container">
-    <!-- Tombol List User -->
-    
-
     <div class="form-container">
         <h2>Formulir Pendaftaran User</h2>
 
-        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="nama">Nama:</label>
                 <input type="text" id="nama" name="nama" placeholder="Masukkan Nama Anda" required>
             </div>
 
+            <label for="kelas">Kelas :</label>
+        <select name="kelas_id" id="kelas_id" required>
+            @foreach ($kelas as $kelasItem)
+            <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
+            @endforeach
+        </select><br>
+
             <div class="form-group">
-                <label for="npm">NPM:</label>
-                <input type="text" id="npm" name="npm" placeholder="Masukkan NPM" required>
+                <label for="jurusan">Jurusan:</label>
+                <select name="jurusan" id="jurusan" required>
+                    <option value="" disabled selected>Pilih Jurusan</option>
+                    <option value="fisika">Fisika</option>
+                    <option value="kimia">Kimia</option>
+                    <option value="biologi">Biologi</option>
+                    <option value="matematika">Matematika</option>
+                    <option value="ilmu komputer">Ilmu Komputer</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="kelas_id">Kelas:</label>
-                <select name="kelas_id" id="kelas_id" required>
-                    <option value="" disabled selected>Pilih Kelas</option>
-                    @foreach ($kelas as $kelasItem)
-                        <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
+                <label for="fakultas_id">Fakultas:</label>
+                <select name="fakultas_id" id="fakultas_id" required>
+                    <option value="" disabled selected>Pilih Fakultas</option>
+                    @foreach ($fakultas as $fakultasItem)
+                        <option value="{{ $fakultasItem->id }}">{{ $fakultasItem->nama_fakultas }}</option>
                     @endforeach
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="semester">Semester:</label>
+                <input type="number" id="semester" name="semester" min="1" max="14" placeholder="Masukkan Semester (1-14)" required>
             </div>
 
             <div class="form-group">
                 <label for="foto">Foto Profil:</label>
                 <input type="file" id="foto" name="foto" accept="image/*">
             </div>
-            <input type="submit" value="Simpan">
-            <br>
-            <br>
-            <a href="{{ route('user.list') }}" class="btn-list-user">List User</a>
+
+            <button type="submit">Simpan</button>
         </form>
     </div>
 </div>

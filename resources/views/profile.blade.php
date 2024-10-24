@@ -53,10 +53,16 @@
             <p><strong>Nama:</strong> {{ $user->nama }}</p>
         </div>
         <div class="info-box">
-            <p><strong>NPM:</strong> {{ $user->npm }}</p>
+            <p><strong>Kelas:</strong> {{ $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
         </div>
         <div class="info-box">
-            <p><strong>Kelas:</strong> {{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</p>
+            <p><strong>Jurusan:</strong> {{ $user->jurusan ?? 'Jurusan tidak ditemukan' }}</p>
+        </div>
+        <div class="info-box">
+            <p><strong>Fakultas:</strong> {{ $user->fakultas->nama_fakultas ?? 'Fakultas tidak ditemukan' }}</p>
+        </div>
+        <div class="info-box">
+            <p><strong>Semester:</strong> {{ $user->semester }}</p>
         </div>
     </div>
 </body>
